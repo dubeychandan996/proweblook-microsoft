@@ -331,3 +331,66 @@ test('Power Platform Custom Connector Gateway: all 8 operations + auth/error con
 		}
 	}
 });
+
+test('CERT_REVIEWER_TOKEN resolves all 8 Connector operations + Excel BYOK with exact Swagger parity and zero upstream calls', async () => {
+	const swagger = JSON.parse(
+		fs.readFileSync(
+			path.join(ROOT, 'power-platform-connector', 'certified-connectors', 'ProWebLook', 'apiDefinition.swagger.json'),
+			'utf8'
+		)
+	);
+	const reviewerToken = 'pwl_cert_reviewer_unit_test_secret_token';
+	const env = { CERT_REVIEWER_TOKEN: reviewerToken };
+	const throwingFetch = async () => {
+		throw new Error('Upstream fetch must not be called when CERT_REVIEWER_TOKEN is used');
+	};
+
+	const cases = [
+		['POST', '/verify-lead', { phoneNumber: '+14255550177', email: 'reviewer@contoso.com', leadName: 'Alex Reviewer', ip: '20.112.52.29' }, 'VerifyLeadResponse'],
+		['POST', '/validate-phone', { phoneNumber: '+14255550177', countryCode: 'US' }, 'PhoneValidationResult'],
+		['POST', '/check-whatsapp', { phoneNumber: '+14255550177' }, 'WhatsAppCheckResult'],
+		['POST', '/verify-email', { email: 'reviewer@contoso.com' }, 'EmailVerificationResult'],
+		['POST', '/lookup-caller-id', { phoneNumber: '+14255550177', leadName: 'Alex Reviewer' }, 'CallerIdResult'],
+		['POST', '/check-blacklist', { target: 'contoso.com' }, 'BlacklistCheckResult'],
+		['POST', '/lookup-ip-geo', { ip: '20.112.52.29', expectedCountry: 'US' }, 'IpGeoResult'],
+		['GET', '/balances', null, 'AccountBalancesResponse'],
+	];
+
+	for (const [method, subRoute, payload, defName] of cases) {
+		const res = await handleMicrosoftEdgeRequest(
+			new Request(`https://m365.proweblook.com/api/connector/v1${subRoute}`, {
+				method,
+				headers: {
+					'Content-Type': 'application/json',
+					'X-API-Key': reviewerToken,
+				},
+				body: payload ? JSON.stringify(payload) : undefined,
+			}),
+			env,
+			throwingFetch
+		);
+		assert.equal(res.status, 200, `Expected 200 on ${method} ${subRoute}`);
+		const json = await res.json();
+		const schemaProps = Object.keys(swagger.definitions[defName].properties);
+		for (const k of Object.keys(json)) {
+			assert.ok(schemaProps.includes(k), `Unexpected key "${k}" in ${subRoute} not declared in ${defName}`);
+		}
+		for (const expectedKey of schemaProps) {
+			assert.ok(expectedKey in json, `Missing declared key "${expectedKey}" in ${subRoute} (${defName})`);
+		}
+	}
+
+	const excelVerify = await handleMicrosoftEdgeRequest(
+		new Request('https://excel.proweblook.com/api/excel/v1/verify', {
+			method: 'POST',
+			headers: { 'Content-Type': 'application/json', 'X-API-Key': reviewerToken },
+			body: JSON.stringify({ phoneNumber: '+14255550177', email: 'reviewer@contoso.com', ip: '20.112.52.29' }),
+		}),
+		env,
+		throwingFetch
+	);
+	assert.equal(excelVerify.status, 200);
+	const exBody = await excelVerify.json();
+	assert.equal(exBody.mode, 'byok');
+	assert.ok(exBody.data.trustScore >= 70);
+});

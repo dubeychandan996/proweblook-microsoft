@@ -231,7 +231,7 @@ export function renderPrivacyPage() {
 		`
 		<div class="card">
 			<h2>1. Scope</h2>
-			<p>This Privacy Policy governs the <strong>ProWebLook Lead &amp; WhatsApp Verifier</strong> Microsoft Excel Add-in (<code>excel.proweblook.com</code>) and the <strong>ProWebLook</strong> Microsoft Power Platform Custom Connector (<code>m365.proweblook.com</code>), operated by ProWebLook ("we", "us").</p>
+			<p>This Privacy Policy governs the <strong>ProWebLook Lead and WhatsApp Verifier</strong> (<strong>ProWebLook Lead &amp; WhatsApp Verifier</strong>) Microsoft Excel Add-in (<code>excel.proweblook.com</code>) and the <strong>ProWebLook</strong> Microsoft Power Platform &amp; Copilot Studio Connector (<code>m365.proweblook.com</code>), operated by ProWebLook ("we", "us").</p>
 
 			<h2>2. Data Processed</h2>
 			<ul>

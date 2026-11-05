@@ -8,8 +8,8 @@
   <Version>1.0.0.0</Version>
   <ProviderName>ProWebLook</ProviderName>
   <DefaultLocale>en-US</DefaultLocale>
-  <DisplayName DefaultValue="ProWebLook Lead &amp; WhatsApp Verifier"/>
-  <Description DefaultValue="Bulk verify Phone Carrier, Silent WhatsApp, Caller ID (CNAM), Email Deliverability, Corporate DNSBL &amp; Edge GeoIP directly in Microsoft Excel."/>
+  <DisplayName DefaultValue="ProWebLook Lead and WhatsApp Verifier"/>
+  <Description DefaultValue="Bulk verify Phone Carrier, Silent WhatsApp, Caller ID, Email, DNSBL &amp; GeoIP in Microsoft Excel."/>
   <IconUrl DefaultValue="https://excel.proweblook.com/assets/icon-32.png"/>
   <HighResolutionIconUrl DefaultValue="https://excel.proweblook.com/assets/icon-64.png"/>
   <SupportUrl DefaultValue="https://excel.proweblook.com/support"/>

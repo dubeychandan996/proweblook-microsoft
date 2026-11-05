@@ -2,8 +2,8 @@
 
 ## Offer 1: Office Store (Excel Add-in)
 - **Offer Alias / ID:** `proweblook-excel-verifier`
-- **Manifest DisplayName (exact match):** `ProWebLook Lead & WhatsApp Verifier`
-- **Manifest Short Description (exact match):** `Bulk verify Phone Carrier, Silent WhatsApp, Caller ID (CNAM), Email Deliverability, Corporate DNSBL & Edge GeoIP directly in Microsoft Excel.`
+- **Manifest DisplayName (exact match):** `ProWebLook Lead and WhatsApp Verifier`
+- **Manifest Short Description (exact match, <=100 chars):** `Bulk verify Phone Carrier, Silent WhatsApp, Caller ID, Email, DNSBL & GeoIP in Microsoft Excel.`
 - **Support URL:** `https://excel.proweblook.com/support`
 - **Privacy Policy URL:** `https://excel.proweblook.com/privacy`
 - **End User License Agreement (EULA) URL:** `https://excel.proweblook.com/terms`
