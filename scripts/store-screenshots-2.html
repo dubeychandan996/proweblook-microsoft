@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Segoe UI', -apple-system, sans-serif; }
+  .slide {
+    width: 1366px;
+    height: 768px;
+    background: linear-gradient(135deg, #0f172a 0%, #1e293b 60%, #065f46 100%);
+    padding: 42px 50px;
+    display: grid;
+    grid-template-columns: 1.15fr 0.85fr;
+    gap: 36px;
+    align-items: center;
+  }
+  .badge {
+    display: inline-block;
+    background: rgba(16, 185, 129, 0.2);
+    border: 1px solid rgba(16, 185, 129, 0.45);
+    color: #a7f3d0;
+    font-size: 13.5px;
+    font-weight: 700;
+    padding: 6px 14px;
+    border-radius: 999px;
+    margin-bottom: 16px;
+  }
+  h1 { color: #ffffff; font-size: 38px; line-height: 1.18; font-weight: 800; }
+  .lead { color: #cbd5e1; font-size: 17px; margin: 14px 0 24px; line-height: 1.5; }
+  .formula-stack { display: flex; flex-direction: column; gap: 10px; }
+  .f-row {
+    background: rgba(15, 23, 42, 0.72);
+    border: 1px solid rgba(148, 163, 184, 0.28);
+    border-radius: 10px;
+    padding: 12px 16px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    color: #f8fafc;
+  }
+  .f-row code { font-family: Consolas, monospace; font-size: 14.5px; color: #7dd3fc; font-weight: 700; }
+  .f-row span { font-size: 13px; color: #94a3b8; }
+  .card {
+    background: #ffffff;
+    border-radius: 14px;
+    padding: 24px;
+    box-shadow: 0 24px 60px rgba(0,0,0,0.45);
+  }
+  .score-box {
+    background: #f0fdf4;
+    border: 1.5px solid #86efac;
+    border-radius: 10px;
+    padding: 16px;
+    margin-top: 14px;
+  }
+  .score-hdr { display: flex; justify-content: space-between; align-items: center; }
+  .score-big { font-size: 30px; font-weight: 800; color: #0f172a; }
+  .pill { background: #dff6dd; color: #107c10; padding: 4px 12px; border-radius: 999px; font-weight: 800; font-size: 12px; }
+  .kv { display: flex; justify-content: space-between; padding: 9px 0; border-bottom: 1px dashed #cbd5e1; font-size: 13.5px; }
+  .kv:last-child { border-bottom: 0; }
+</style>
+</head>
+<body>
+  <div class="slide">
+    <div>
+      <span class="badge">7 NATIVE =PROWEBLOOK.* EXCEL CUSTOM FORMULAS</span>
+      <h1>Real-Time Telecom, WhatsApp &amp; Email Intelligence in Any Cell</h1>
+      <p class="lead">Call ProWebLook directly from standard Excel formulas with built-in session caching so duplicate phone numbers and emails never burn extra credits.</p>
+      <div class="formula-stack">
+        <div class="f-row"><code>=PROWEBLOOK.TRUSTSCORE(B2, C2, D2, A2, E2)</code><span>0–100 Fraud Score</span></div>
+        <div class="f-row"><code>=PROWEBLOOK.WHATSAPP(B2, D2)</code><span>Silent WhatsApp Check</span></div>
+        <div class="f-row"><code>=PROWEBLOOK.PHONE(B2, D2, "linetype")</code><span>Mobile / VoIP / Landline</span></div>
+        <div class="f-row"><code>=PROWEBLOOK.EMAIL(C2)</code><span>Deliverable vs Temp-Mail</span></div>
+        <div class="f-row"><code>=PROWEBLOOK.CALLERID(B2, A2, D2)</code><span>CNAM Subscriber Match</span></div>
+        <div class="f-row"><code>=PROWEBLOOK.DNSBL(C2)</code><span>50+ Spam DNSBL Feeds</span></div>
+        <div class="f-row"><code>=PROWEBLOOK.IPGEO(E2, D2)</code><span>Edge GeoIP &amp; VPN Check</span></div>
+      </div>
+    </div>
+    <div class="card">
+      <div style="font-size:16px;font-weight:800;color:#0f172a;">Instant 6-Signal Quick Check</div>
+      <div style="font-size:12.5px;color:#64748b;margin-top:2px;">Verify individual leads or test sample records in 1 click</div>
+      <div class="score-box">
+        <div class="score-hdr">
+          <div>
+            <div style="font-size:12px;color:#475569;font-weight:600;">Composite Trust Score</div>
+            <div class="score-big">100 / 100</div>
+          </div>
+          <span class="pill">TRUSTED</span>
+        </div>
+        <div style="margin-top:12px;">
+          <div class="kv"><span style="color:#475569;">Phone &amp; Carrier</span><strong>VALID · Mobile (Reliance Jio)</strong></div>
+          <div class="kv"><span style="color:#475569;">Silent WhatsApp</span><strong>Active (Personal)</strong></div>
+          <div class="kv"><span style="color:#475569;">Caller ID (CNAM)</span><strong>Aarav Mehta [MATCH]</strong></div>
+          <div class="kv"><span style="color:#475569;">Email Verdict</span><strong>DELIVERABLE (corporate)</strong></div>
+          <div class="kv"><span style="color:#475569;">Domain DNSBL</span><strong>CLEAN (54 feeds)</strong></div>
+          <div class="kv"><span style="color:#475569;">Edge GeoIP</span><strong>Mumbai, IN (AS55836)</strong></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</body>
+</html>
