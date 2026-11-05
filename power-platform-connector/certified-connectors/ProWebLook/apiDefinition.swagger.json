@@ -1,0 +1,1081 @@
+{
+    "swagger": "2.0",
+    "info": {
+        "title": "ProWebLook",
+        "description": "Verify phone numbers, carrier and VoIP line types, silent WhatsApp registration, email deliverability, Caller ID (CNAM), DNSBL domain reputation, Edge GeoIP, and composite 0-100 lead and COD fraud trust scores across Power Automate, Logic Apps, and Microsoft Copilot Studio.",
+        "version": "1.0.0",
+        "contact": {
+            "name": "ProWebLook Support",
+            "url": "https://excel.proweblook.com/support",
+            "email": "support@proweblook.com"
+        }
+    },
+    "x-ms-connector-metadata": [
+        {
+            "propertyName": "Website",
+            "propertyValue": "https://proweblook.com"
+        },
+        {
+            "propertyName": "Privacy policy",
+            "propertyValue": "https://excel.proweblook.com/privacy"
+        },
+        {
+            "propertyName": "Categories",
+            "propertyValue": "Data;Security"
+        }
+    ],
+    "host": "m365.proweblook.com",
+    "basePath": "/api/connector/v1",
+    "schemes": [
+        "https"
+    ],
+    "consumes": [
+        "application/json"
+    ],
+    "produces": [
+        "application/json"
+    ],
+    "securityDefinitions": {
+        "api_key": {
+            "type": "apiKey",
+            "in": "header",
+            "name": "X-API-Key",
+            "description": "Your ProWebLook API key from https://proweblook.com/user/api_key."
+        }
+    },
+    "security": [
+        {
+            "api_key": []
+        }
+    ],
+    "paths": {
+        "/verify-lead": {
+            "post": {
+                "operationId": "VerifyLeadMultiSignal",
+                "summary": "Verify lead and calculate fraud trust score",
+                "description": "Runs parallel multi-signal verification across phone carrier, WhatsApp, email deliverability, Caller ID, corporate DNSBL, and Edge GeoIP to return a composite 0 to 100 trust score and risk level.",
+                "x-ms-visibility": "important",
+                "parameters": [
+                    {
+                        "name": "body",
+                        "in": "body",
+                        "required": true,
+                        "x-ms-summary": "Lead Verification Request",
+                        "description": "Lead contact identifiers and optional signal toggles to evaluate.",
+                        "schema": {
+                            "$ref": "#/definitions/VerifyLeadRequest"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Composite lead trust score, risk classification, and multi-signal verification details.",
+                        "schema": {
+                            "$ref": "#/definitions/VerifyLeadResponse"
+                        }
+                    },
+                    "400": {
+                        "description": "Invalid input parameter format or missing required identifier.",
+                        "schema": {
+                            "$ref": "#/definitions/ErrorResponse"
+                        }
+                    },
+                    "401": {
+                        "description": "Missing or invalid ProWebLook API key.",
+                        "schema": {
+                            "$ref": "#/definitions/ErrorResponse"
+                        }
+                    },
+                    "402": {
+                        "description": "Insufficient ProWebLook credit balance for the requested verification signal.",
+                        "schema": {
+                            "$ref": "#/definitions/ErrorResponse"
+                        }
+                    },
+                    "default": {
+                        "description": "Unexpected upstream verification error.",
+                        "schema": {
+                            "$ref": "#/definitions/ErrorResponse"
+                        }
+                    }
+                }
+            }
+        },
+        "/validate-phone": {
+            "post": {
+                "operationId": "ValidatePhone",
+                "summary": "Validate phone number and line type",
+                "description": "Validates an international or national phone number and returns carrier name, line type (Mobile, VoIP, or Landline), E.164 formatting, and geographic region.",
+                "x-ms-visibility": "important",
+                "parameters": [
+                    {
+                        "name": "body",
+                        "in": "body",
+                        "required": true,
+                        "x-ms-summary": "Phone Validation Request",
+                        "description": "Phone number and optional ISO country hint to validate.",
+                        "schema": {
+                            "$ref": "#/definitions/PhoneLookupRequest"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Validated phone carrier, line type, and formatting metadata.",
+                        "schema": {
+                            "$ref": "#/definitions/PhoneValidationResult"
+                        }
+                    },
+                    "400": {
+                        "description": "Invalid input parameter format or missing required identifier.",
+                        "schema": {
+                            "$ref": "#/definitions/ErrorResponse"
+                        }
+                    },
+                    "401": {
+                        "description": "Missing or invalid ProWebLook API key.",
+                        "schema": {
+                            "$ref": "#/definitions/ErrorResponse"
+                        }
+                    },
+                    "402": {
+                        "description": "Insufficient ProWebLook credit balance for the requested verification signal.",
+                        "schema": {
+                            "$ref": "#/definitions/ErrorResponse"
+                        }
+                    },
+                    "default": {
+                        "description": "Unexpected upstream verification error.",
+                        "schema": {
+                            "$ref": "#/definitions/ErrorResponse"
+                        }
+                    }
+                }
+            }
+        },
+        "/check-whatsapp": {
+            "post": {
+                "operationId": "CheckWhatsApp",
+                "summary": "Check WhatsApp registration status",
+                "description": "Silently checks whether a phone number is registered on WhatsApp Personal or WhatsApp Business without sending any message or notification.",
+                "x-ms-visibility": "important",
+                "parameters": [
+                    {
+                        "name": "body",
+                        "in": "body",
+                        "required": true,
+                        "x-ms-summary": "WhatsApp Check Request",
+                        "description": "Phone number and optional ISO country code hint for silent WhatsApp verification.",
+                        "schema": {
+                            "$ref": "#/definitions/PhoneLookupRequest"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Silent WhatsApp registration and Business account status.",
+                        "schema": {
+                            "$ref": "#/definitions/WhatsAppCheckResult"
+                        }
+                    },
+                    "400": {
+                        "description": "Invalid input parameter format or missing required identifier.",
+                        "schema": {
+                            "$ref": "#/definitions/ErrorResponse"
+                        }
+                    },
+                    "401": {
+                        "description": "Missing or invalid ProWebLook API key.",
+                        "schema": {
+                            "$ref": "#/definitions/ErrorResponse"
+                        }
+                    },
+                    "402": {
+                        "description": "Insufficient ProWebLook credit balance for the requested verification signal.",
+                        "schema": {
+                            "$ref": "#/definitions/ErrorResponse"
+                        }
+                    },
+                    "default": {
+                        "description": "Unexpected upstream verification error.",
+                        "schema": {
+                            "$ref": "#/definitions/ErrorResponse"
+                        }
+                    }
+                }
+            }
+        },
+        "/verify-email": {
+            "post": {
+                "operationId": "VerifyEmail",
+                "summary": "Verify email deliverability and disposable status",
+                "description": "Verifies email syntax, domain MX records, mailbox existence, corporate vs. webmail type, and 10-minute disposable temp-mail domains.",
+                "x-ms-visibility": "important",
+                "parameters": [
+                    {
+                        "name": "body",
+                        "in": "body",
+                        "required": true,
+                        "x-ms-summary": "Email Verification Request",
+                        "description": "Email address to check for deliverability and disposable domain risk.",
+                        "schema": {
+                            "$ref": "#/definitions/EmailVerifyRequest"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Email deliverability verdict and domain classification.",
+                        "schema": {
+                            "$ref": "#/definitions/EmailVerificationResult"
+                        }
+                    },
+                    "400": {
+                        "description": "Invalid input parameter format or missing required identifier.",
+                        "schema": {
+                            "$ref": "#/definitions/ErrorResponse"
+                        }
+                    },
+                    "401": {
+                        "description": "Missing or invalid ProWebLook API key.",
+                        "schema": {
+                            "$ref": "#/definitions/ErrorResponse"
+                        }
+                    },
+                    "402": {
+                        "description": "Insufficient ProWebLook credit balance for the requested verification signal.",
+                        "schema": {
+                            "$ref": "#/definitions/ErrorResponse"
+                        }
+                    },
+                    "default": {
+                        "description": "Unexpected upstream verification error.",
+                        "schema": {
+                            "$ref": "#/definitions/ErrorResponse"
+                        }
+                    }
+                }
+            }
+        },
+        "/lookup-caller-id": {
+            "post": {
+                "operationId": "LookupCallerId",
+                "summary": "Look up Caller ID subscriber name",
+                "description": "Retrieves the registered CNAM Caller ID subscriber name and compares it against an optional lead or company name to detect spoofed identities.",
+                "x-ms-visibility": "important",
+                "parameters": [
+                    {
+                        "name": "body",
+                        "in": "body",
+                        "required": true,
+                        "x-ms-summary": "Caller ID Lookup Request",
+                        "description": "Phone number and optional lead or company name for CNAM identity matching.",
+                        "schema": {
+                            "$ref": "#/definitions/CallerIdRequest"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Registered Caller ID subscriber name and fuzzy match status.",
+                        "schema": {
+                            "$ref": "#/definitions/CallerIdResult"
+                        }
+                    },
+                    "400": {
+                        "description": "Invalid input parameter format or missing required identifier.",
+                        "schema": {
+                            "$ref": "#/definitions/ErrorResponse"
+                        }
+                    },
+                    "401": {
+                        "description": "Missing or invalid ProWebLook API key.",
+                        "schema": {
+                            "$ref": "#/definitions/ErrorResponse"
+                        }
+                    },
+                    "402": {
+                        "description": "Insufficient ProWebLook credit balance for the requested verification signal.",
+                        "schema": {
+                            "$ref": "#/definitions/ErrorResponse"
+                        }
+                    },
+                    "default": {
+                        "description": "Unexpected upstream verification error.",
+                        "schema": {
+                            "$ref": "#/definitions/ErrorResponse"
+                        }
+                    }
+                }
+            }
+        },
+        "/check-blacklist": {
+            "post": {
+                "operationId": "CheckBlacklist",
+                "summary": "Check domain or IP against DNSBL blocklists",
+                "description": "Screens a corporate domain name or public IP address against more than 50 real-time DNSBL spam, phishing, and malware blocklists.",
+                "parameters": [
+                    {
+                        "name": "body",
+                        "in": "body",
+                        "required": true,
+                        "x-ms-summary": "Blacklist Check Request",
+                        "description": "Domain name, email address, or IP address to screen against DNSBL feeds.",
+                        "schema": {
+                            "$ref": "#/definitions/BlacklistCheckRequest"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "DNSBL listing count and reputation verdict.",
+                        "schema": {
+                            "$ref": "#/definitions/BlacklistCheckResult"
+                        }
+                    },
+                    "400": {
+                        "description": "Invalid input parameter format or missing required identifier.",
+                        "schema": {
+                            "$ref": "#/definitions/ErrorResponse"
+                        }
+                    },
+                    "401": {
+                        "description": "Missing or invalid ProWebLook API key.",
+                        "schema": {
+                            "$ref": "#/definitions/ErrorResponse"
+                        }
+                    },
+                    "402": {
+                        "description": "Insufficient ProWebLook credit balance for the requested verification signal.",
+                        "schema": {
+                            "$ref": "#/definitions/ErrorResponse"
+                        }
+                    },
+                    "default": {
+                        "description": "Unexpected upstream verification error.",
+                        "schema": {
+                            "$ref": "#/definitions/ErrorResponse"
+                        }
+                    }
+                }
+            }
+        },
+        "/lookup-ip-geo": {
+            "post": {
+                "operationId": "LookupIpGeo",
+                "summary": "Look up IP geolocation and VPN status",
+                "description": "Resolves IPv4 or IPv6 geolocation, ISP, ASN, datacenter/VPN/proxy flags, and optional billing country mismatch.",
+                "parameters": [
+                    {
+                        "name": "body",
+                        "in": "body",
+                        "required": true,
+                        "x-ms-summary": "IP Geolocation Request",
+                        "description": "Public IPv4 or IPv6 address and optional expected billing country code.",
+                        "schema": {
+                            "$ref": "#/definitions/IpGeoRequest"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "IP geolocation, ISP/ASN metadata, and proxy or country mismatch flags.",
+                        "schema": {
+                            "$ref": "#/definitions/IpGeoResult"
+                        }
+                    },
+                    "400": {
+                        "description": "Invalid input parameter format or missing required identifier.",
+                        "schema": {
+                            "$ref": "#/definitions/ErrorResponse"
+                        }
+                    },
+                    "401": {
+                        "description": "Missing or invalid ProWebLook API key.",
+                        "schema": {
+                            "$ref": "#/definitions/ErrorResponse"
+                        }
+                    },
+                    "402": {
+                        "description": "Insufficient ProWebLook credit balance for the requested verification signal.",
+                        "schema": {
+                            "$ref": "#/definitions/ErrorResponse"
+                        }
+                    },
+                    "default": {
+                        "description": "Unexpected upstream verification error.",
+                        "schema": {
+                            "$ref": "#/definitions/ErrorResponse"
+                        }
+                    }
+                }
+            }
+        },
+        "/balances": {
+            "get": {
+                "operationId": "GetAccountBalances",
+                "summary": "Get ProWebLook credit balances",
+                "description": "Returns current credit balances across Phone, WhatsApp, Email, Caller ID, Blacklist, and monthly Edge GeoIP pools for the authenticated ProWebLook account.",
+                "x-ms-visibility": "important",
+                "parameters": [],
+                "responses": {
+                    "200": {
+                        "description": "Current ProWebLook product credit balances.",
+                        "schema": {
+                            "$ref": "#/definitions/AccountBalancesResponse"
+                        }
+                    },
+                    "400": {
+                        "description": "Invalid input parameter format or missing required identifier.",
+                        "schema": {
+                            "$ref": "#/definitions/ErrorResponse"
+                        }
+                    },
+                    "401": {
+                        "description": "Missing or invalid ProWebLook API key.",
+                        "schema": {
+                            "$ref": "#/definitions/ErrorResponse"
+                        }
+                    },
+                    "402": {
+                        "description": "Insufficient ProWebLook credit balance for the requested verification signal.",
+                        "schema": {
+                            "$ref": "#/definitions/ErrorResponse"
+                        }
+                    },
+                    "default": {
+                        "description": "Unexpected upstream verification error.",
+                        "schema": {
+                            "$ref": "#/definitions/ErrorResponse"
+                        }
+                    }
+                }
+            }
+        }
+    },
+    "definitions": {
+        "ErrorResponse": {
+            "type": "object",
+            "description": "Standard error payload returned when validation or authentication fails.",
+            "properties": {
+                "ok": {
+                    "type": "boolean",
+                    "x-ms-summary": "Success Flag",
+                    "description": "Indicates whether the API call succeeded."
+                },
+                "code": {
+                    "type": "string",
+                    "x-ms-summary": "Error Code",
+                    "description": "Machine-readable error identifier such as invalid_input or insufficient_credit."
+                },
+                "error": {
+                    "type": "string",
+                    "x-ms-summary": "Error Message",
+                    "description": "Human-readable explanation of why the request failed."
+                }
+            }
+        },
+        "PhoneLookupRequest": {
+            "type": "object",
+            "required": [
+                "phoneNumber"
+            ],
+            "description": "Parameters for validating a phone number or checking WhatsApp registration.",
+            "properties": {
+                "phoneNumber": {
+                    "type": "string",
+                    "x-ms-summary": "Phone Number",
+                    "description": "Phone number in E.164 format (+14155552671) or national digits."
+                },
+                "countryCode": {
+                    "type": "string",
+                    "x-ms-summary": "Country Code Hint",
+                    "description": "Optional 2-letter ISO 3166-1 alpha-2 country hint such as US, IN, or GB."
+                }
+            }
+        },
+        "EmailVerifyRequest": {
+            "type": "object",
+            "required": [
+                "email"
+            ],
+            "description": "Parameters for verifying an email address.",
+            "properties": {
+                "email": {
+                    "type": "string",
+                    "x-ms-summary": "Email Address",
+                    "description": "Email address to check for deliverability and disposable status."
+                }
+            }
+        },
+        "CallerIdRequest": {
+            "type": "object",
+            "required": [
+                "phoneNumber"
+            ],
+            "description": "Parameters for looking up CNAM Caller ID and matching lead identity.",
+            "properties": {
+                "phoneNumber": {
+                    "type": "string",
+                    "x-ms-summary": "Phone Number",
+                    "description": "Phone number in E.164 format (+14155552671) or national digits."
+                },
+                "countryCode": {
+                    "type": "string",
+                    "x-ms-summary": "Country Code Hint",
+                    "description": "Optional 2-letter ISO country code hint such as US or IN."
+                },
+                "leadName": {
+                    "type": "string",
+                    "x-ms-summary": "Lead Full Name",
+                    "description": "Optional customer or lead name to compare against the registered Caller ID."
+                },
+                "companyName": {
+                    "type": "string",
+                    "x-ms-summary": "Company Name",
+                    "description": "Optional business or organization name to compare against Caller ID."
+                }
+            }
+        },
+        "BlacklistCheckRequest": {
+            "type": "object",
+            "required": [
+                "target"
+            ],
+            "description": "Parameters for screening a domain or IP against DNSBL blocklists.",
+            "properties": {
+                "target": {
+                    "type": "string",
+                    "x-ms-summary": "Domain or IP",
+                    "description": "Corporate domain name, email address, or public IPv4/IPv6 address to screen."
+                },
+                "targetType": {
+                    "type": "string",
+                    "x-ms-summary": "Target Type",
+                    "description": "Optional target classification.",
+                    "enum": [
+                        "auto",
+                        "domain",
+                        "ip"
+                    ],
+                    "default": "auto"
+                }
+            }
+        },
+        "IpGeoRequest": {
+            "type": "object",
+            "required": [
+                "ip"
+            ],
+            "description": "Parameters for resolving IP geolocation and VPN or country mismatch status.",
+            "properties": {
+                "ip": {
+                    "type": "string",
+                    "x-ms-summary": "IP Address",
+                    "description": "Public IPv4 or IPv6 address to inspect."
+                },
+                "expectedCountry": {
+                    "type": "string",
+                    "x-ms-summary": "Expected Country Code",
+                    "description": "Optional 2-letter ISO billing or shipping country code to detect location mismatches."
+                }
+            }
+        },
+        "VerifyLeadRequest": {
+            "type": "object",
+            "description": "Multi-signal lead or e-commerce COD order attributes to verify in parallel.",
+            "properties": {
+                "phoneNumber": {
+                    "type": "string",
+                    "x-ms-summary": "Phone Number",
+                    "description": "Customer or lead phone number in E.164 or national format."
+                },
+                "email": {
+                    "type": "string",
+                    "x-ms-summary": "Email Address",
+                    "description": "Customer or lead email address to verify."
+                },
+                "countryCode": {
+                    "type": "string",
+                    "x-ms-summary": "Country Code",
+                    "description": "Optional 2-letter ISO country code such as US, IN, GB, or AE."
+                },
+                "leadName": {
+                    "type": "string",
+                    "x-ms-summary": "Lead Name",
+                    "description": "Optional customer full name for Caller ID identity matching."
+                },
+                "companyName": {
+                    "type": "string",
+                    "x-ms-summary": "Company Name",
+                    "description": "Optional company name for B2B Caller ID matching."
+                },
+                "ip": {
+                    "type": "string",
+                    "x-ms-summary": "IP Address",
+                    "description": "Optional customer IPv4 or IPv6 address for GeoIP and VPN detection."
+                },
+                "domain": {
+                    "type": "string",
+                    "x-ms-summary": "Corporate Domain",
+                    "description": "Optional corporate domain override for DNSBL reputation screening."
+                }
+            }
+        },
+        "PhoneValidationResult": {
+            "type": "object",
+            "description": "Carrier, line type, and E.164 formatting details for a phone number.",
+            "properties": {
+                "valid": {
+                    "type": "boolean",
+                    "x-ms-summary": "Is Valid",
+                    "description": "True when the phone number is confirmed active and assignable."
+                },
+                "status": {
+                    "type": "string",
+                    "x-ms-summary": "Validation Status",
+                    "description": "Raw telecom status such as VALID_CONFIRMED or INVALID."
+                },
+                "verdict": {
+                    "type": "string",
+                    "x-ms-summary": "Phone Verdict",
+                    "description": "Normalized verdict: valid, invalid, or unknown."
+                },
+                "phoneNumber": {
+                    "type": "string",
+                    "x-ms-summary": "Normalized Input",
+                    "description": "Normalized digits or E.164 input string."
+                },
+                "formattedNumber": {
+                    "type": "string",
+                    "x-ms-summary": "International Format",
+                    "description": "Formatted international E.164 or display number."
+                },
+                "nationalFormat": {
+                    "type": "string",
+                    "x-ms-summary": "National Format",
+                    "description": "Locally formatted national phone string."
+                },
+                "lineType": {
+                    "type": "string",
+                    "x-ms-summary": "Line Type",
+                    "description": "Detected line type such as Mobile, VoIP, or Fixed line."
+                },
+                "isVoip": {
+                    "type": "boolean",
+                    "x-ms-summary": "Is VoIP Line",
+                    "description": "True when the phone number belongs to a virtual or VoIP carrier."
+                },
+                "isLandline": {
+                    "type": "boolean",
+                    "x-ms-summary": "Is Landline",
+                    "description": "True when the phone number is a fixed landline."
+                },
+                "carrier": {
+                    "type": "string",
+                    "x-ms-summary": "Carrier Name",
+                    "description": "Operating mobile or fixed telecom network name."
+                },
+                "location": {
+                    "type": "string",
+                    "x-ms-summary": "Region or City",
+                    "description": "Geographic city or state associated with the number."
+                },
+                "countryCode": {
+                    "type": "string",
+                    "x-ms-summary": "ISO Country Code",
+                    "description": "Resolved 2-letter ISO country code."
+                },
+                "countryName": {
+                    "type": "string",
+                    "x-ms-summary": "Country Name",
+                    "description": "Full country name for the phone number."
+                },
+                "timezone": {
+                    "type": "string",
+                    "x-ms-summary": "Timezone",
+                    "description": "Primary IANA timezone identifier for the number region."
+                }
+            }
+        },
+        "WhatsAppCheckResult": {
+            "type": "object",
+            "description": "Silent WhatsApp registration and account classification result.",
+            "properties": {
+                "phoneNumber": {
+                    "type": "string",
+                    "x-ms-summary": "Phone Number",
+                    "description": "Normalized phone number checked on WhatsApp."
+                },
+                "registered": {
+                    "type": "boolean",
+                    "x-ms-summary": "Registered on WhatsApp",
+                    "description": "True when an active WhatsApp account exists."
+                },
+                "isBusiness": {
+                    "type": "boolean",
+                    "x-ms-summary": "Is WhatsApp Business",
+                    "description": "True when registered as a WhatsApp Business profile."
+                },
+                "accountType": {
+                    "type": "string",
+                    "x-ms-summary": "Account Type",
+                    "description": "Detected WhatsApp tier: personal, business, or none."
+                },
+                "verdict": {
+                    "type": "string",
+                    "x-ms-summary": "WhatsApp Verdict",
+                    "description": "Normalized status: on_whatsapp or not_on_whatsapp."
+                },
+                "countryCode": {
+                    "type": "string",
+                    "x-ms-summary": "Country Code",
+                    "description": "Resolved 2-letter ISO country code."
+                }
+            }
+        },
+        "EmailVerificationResult": {
+            "type": "object",
+            "description": "Email deliverability, MX/mailbox status, and disposable domain result.",
+            "properties": {
+                "email": {
+                    "type": "string",
+                    "x-ms-summary": "Email Address",
+                    "description": "Normalized lowercase email address."
+                },
+                "domain": {
+                    "type": "string",
+                    "x-ms-summary": "Email Domain",
+                    "description": "Extracted domain portion of the email address."
+                },
+                "deliverable": {
+                    "type": "boolean",
+                    "x-ms-summary": "Is Deliverable",
+                    "description": "True when the mailbox is verified as safe to send."
+                },
+                "verdict": {
+                    "type": "string",
+                    "x-ms-summary": "Email Verdict",
+                    "description": "Verdict: deliverable, undeliverable, disposable, risky, or unknown."
+                },
+                "isDisposable": {
+                    "type": "boolean",
+                    "x-ms-summary": "Is Disposable Domain",
+                    "description": "True when hosted by a temporary or throwaway mail provider."
+                },
+                "isFreeWebmail": {
+                    "type": "boolean",
+                    "x-ms-summary": "Is Free Webmail",
+                    "description": "True for public consumer mailboxes such as Gmail or Outlook."
+                },
+                "emailType": {
+                    "type": "string",
+                    "x-ms-summary": "Email Category",
+                    "description": "Classification: corporate, free_webmail, or disposable."
+                },
+                "reasonCode": {
+                    "type": "string",
+                    "x-ms-summary": "Reason Code",
+                    "description": "Diagnostic verification reason code."
+                },
+                "emailFormatValid": {
+                    "type": "boolean",
+                    "x-ms-summary": "Syntax Valid",
+                    "description": "True when the address conforms to RFC email syntax."
+                },
+                "mailboxExists": {
+                    "type": "boolean",
+                    "x-ms-summary": "Mailbox Exists",
+                    "description": "True when MX/SMTP verification confirms the mailbox exists."
+                }
+            }
+        },
+        "CallerIdResult": {
+            "type": "object",
+            "description": "Caller ID (CNAM) subscriber lookup and lead-name comparison result.",
+            "properties": {
+                "phoneNumber": {
+                    "type": "string",
+                    "x-ms-summary": "Phone Number",
+                    "description": "Normalized phone number queried for Caller ID."
+                },
+                "found": {
+                    "type": "boolean",
+                    "x-ms-summary": "Caller ID Found",
+                    "description": "True when a registered subscriber name was found."
+                },
+                "verdict": {
+                    "type": "string",
+                    "x-ms-summary": "Caller ID Verdict",
+                    "description": "Normalized lookup outcome: found or not_found."
+                },
+                "callerName": {
+                    "type": "string",
+                    "x-ms-summary": "Caller Name",
+                    "description": "Registered subscriber or business display name."
+                },
+                "callerType": {
+                    "type": "string",
+                    "x-ms-summary": "Caller Type",
+                    "description": "Subscriber classification such as CONSUMER or BUSINESS."
+                },
+                "nameMatch": {
+                    "type": "string",
+                    "x-ms-summary": "Lead Name Match",
+                    "description": "Fuzzy comparison result against leadName: match, partial, mismatch, or not_checked."
+                },
+                "carrier": {
+                    "type": "string",
+                    "x-ms-summary": "Carrier Name",
+                    "description": "Telecom carrier reported by CNAM registry."
+                },
+                "lineType": {
+                    "type": "string",
+                    "x-ms-summary": "Line Type",
+                    "description": "Line classification reported alongside Caller ID."
+                },
+                "location": {
+                    "type": "string",
+                    "x-ms-summary": "Location",
+                    "description": "Geographic region associated with the subscriber."
+                },
+                "countryCode": {
+                    "type": "string",
+                    "x-ms-summary": "Country Code",
+                    "description": "2-letter ISO country code."
+                }
+            }
+        },
+        "BlacklistCheckResult": {
+            "type": "object",
+            "description": "Domain or IP DNSBL reputation check result.",
+            "properties": {
+                "target": {
+                    "type": "string",
+                    "x-ms-summary": "Checked Target",
+                    "description": "Normalized domain name or IP address screened."
+                },
+                "targetType": {
+                    "type": "string",
+                    "x-ms-summary": "Target Type",
+                    "description": "Resolved target category: domain or ip."
+                },
+                "listed": {
+                    "type": "boolean",
+                    "x-ms-summary": "Is Blacklisted",
+                    "description": "True when listed on one or more DNSBL blocklists."
+                },
+                "listedCount": {
+                    "type": "integer",
+                    "x-ms-summary": "Listed Count",
+                    "description": "Number of DNSBL blocklists flagging the target.",
+                    "format": "int32"
+                },
+                "checkedCount": {
+                    "type": "integer",
+                    "x-ms-summary": "Feeds Checked",
+                    "description": "Total number of DNSBL feeds queried.",
+                    "format": "int32"
+                },
+                "skippedFreeWebmail": {
+                    "type": "boolean",
+                    "x-ms-summary": "Skipped Free Webmail",
+                    "description": "True when free consumer webmail domain was skipped."
+                },
+                "verdict": {
+                    "type": "string",
+                    "x-ms-summary": "Blacklist Verdict",
+                    "description": "Normalized reputation verdict: clean, listed, or clean_free_webmail."
+                }
+            }
+        },
+        "IpGeoResult": {
+            "type": "object",
+            "description": "Edge IP geolocation, ISP/ASN, VPN/hosting, and country mismatch result.",
+            "properties": {
+                "ip": {
+                    "type": "string",
+                    "x-ms-summary": "IP Address",
+                    "description": "Resolved IPv4 or IPv6 address."
+                },
+                "countryCode": {
+                    "type": "string",
+                    "x-ms-summary": "IP Country Code",
+                    "description": "2-letter ISO country code of the IP address."
+                },
+                "countryName": {
+                    "type": "string",
+                    "x-ms-summary": "IP Country Name",
+                    "description": "Full country name of the IP address."
+                },
+                "region": {
+                    "type": "string",
+                    "x-ms-summary": "Region or State",
+                    "description": "Administrative region or state name."
+                },
+                "city": {
+                    "type": "string",
+                    "x-ms-summary": "City",
+                    "description": "Resolved city name."
+                },
+                "isp": {
+                    "type": "string",
+                    "x-ms-summary": "ISP or Organization",
+                    "description": "Internet service provider or autonomous system organization."
+                },
+                "asn": {
+                    "type": "string",
+                    "x-ms-summary": "ASN",
+                    "description": "Autonomous System Number identifier."
+                },
+                "timezone": {
+                    "type": "string",
+                    "x-ms-summary": "Timezone",
+                    "description": "IANA timezone at the IP location."
+                },
+                "isHostingOrProxy": {
+                    "type": "boolean",
+                    "x-ms-summary": "Is VPN or Hosting",
+                    "description": "True when the IP belongs to a VPN, proxy, or cloud datacenter."
+                },
+                "expectedCountry": {
+                    "type": "string",
+                    "x-ms-summary": "Expected Country",
+                    "description": "Expected 2-letter ISO country code used for comparison."
+                },
+                "countryMismatch": {
+                    "type": "boolean",
+                    "x-ms-summary": "Country Mismatch",
+                    "description": "True when IP country differs from expectedCountry."
+                },
+                "skippedPrivateIp": {
+                    "type": "boolean",
+                    "x-ms-summary": "Private IP Skipped",
+                    "description": "True when the input IP is a private RFC1918 or loopback address."
+                },
+                "verdict": {
+                    "type": "string",
+                    "x-ms-summary": "IP Verdict",
+                    "description": "Classification: residential_isp, hosting_or_vpn, country_mismatch, or private_ip_skipped."
+                }
+            }
+        },
+        "VerifyLeadSignals": {
+            "type": "object",
+            "description": "Detailed per-signal outputs returned by multi-signal lead verification.",
+            "properties": {
+                "phone": {
+                    "$ref": "#/definitions/PhoneValidationResult"
+                },
+                "whatsapp": {
+                    "$ref": "#/definitions/WhatsAppCheckResult"
+                },
+                "email": {
+                    "$ref": "#/definitions/EmailVerificationResult"
+                },
+                "callerId": {
+                    "$ref": "#/definitions/CallerIdResult"
+                },
+                "blacklist": {
+                    "$ref": "#/definitions/BlacklistCheckResult"
+                },
+                "ipGeo": {
+                    "$ref": "#/definitions/IpGeoResult"
+                }
+            }
+        },
+        "VerifyLeadResponse": {
+            "type": "object",
+            "description": "Composite 0-100 lead trust score, risk tier, and underlying 6-signal results.",
+            "properties": {
+                "trustScore": {
+                    "type": "integer",
+                    "x-ms-summary": "Trust Score (0-100)",
+                    "description": "Composite lead trustworthiness score from 0 (highest fraud risk) to 100 (verified low risk).",
+                    "format": "int32"
+                },
+                "riskLevel": {
+                    "type": "string",
+                    "x-ms-summary": "Risk Level",
+                    "description": "Actionable risk tier: trusted (75-100), review (45-74), or high_risk (0-44)."
+                },
+                "summary": {
+                    "type": "string",
+                    "x-ms-summary": "Verification Summary",
+                    "description": "Human-readable summary of key risk flags and positive trust signals."
+                },
+                "reasons": {
+                    "type": "array",
+                    "x-ms-summary": "Risk Flags",
+                    "description": "List of negative fraud or deliverability indicators triggered by this lead.",
+                    "items": {
+                        "type": "string"
+                    }
+                },
+                "positives": {
+                    "type": "array",
+                    "x-ms-summary": "Positive Signals",
+                    "description": "List of verified positive telecom, email, and identity signals.",
+                    "items": {
+                        "type": "string"
+                    }
+                },
+                "verifiedAt": {
+                    "type": "string",
+                    "x-ms-summary": "Verified Timestamp",
+                    "description": "ISO 8601 UTC timestamp when verification completed."
+                },
+                "signals": {
+                    "$ref": "#/definitions/VerifyLeadSignals"
+                }
+            }
+        },
+        "AccountBalancesResponse": {
+            "type": "object",
+            "description": "Available ProWebLook API credit balances by verification product.",
+            "properties": {
+                "accountEmail": {
+                    "type": "string",
+                    "x-ms-summary": "Account Email",
+                    "description": "Email address of the authenticated ProWebLook account."
+                },
+                "phoneCredits": {
+                    "type": "integer",
+                    "x-ms-summary": "Phone Credits",
+                    "description": "Remaining phone validation credits.",
+                    "format": "int32"
+                },
+                "whatsappCredits": {
+                    "type": "integer",
+                    "x-ms-summary": "WhatsApp Credits",
+                    "description": "Remaining WhatsApp verification credits.",
+                    "format": "int32"
+                },
+                "emailCredits": {
+                    "type": "integer",
+                    "x-ms-summary": "Email Credits",
+                    "description": "Remaining email verification credits.",
+                    "format": "int32"
+                },
+                "callerIdCredits": {
+                    "type": "integer",
+                    "x-ms-summary": "Caller ID Credits",
+                    "description": "Remaining Caller ID lookup credits.",
+                    "format": "int32"
+                },
+                "blacklistCredits": {
+                    "type": "integer",
+                    "x-ms-summary": "Blacklist Credits",
+                    "description": "Remaining DNSBL blacklist check credits.",
+                    "format": "int32"
+                },
+                "ipGeoMonthlyFreeQuota": {
+                    "type": "integer",
+                    "x-ms-summary": "Monthly Edge GeoIP Quota",
+                    "description": "Included monthly Edge GeoIP lookups.",
+                    "format": "int32"
+                }
+            }
+        }
+    }
+}

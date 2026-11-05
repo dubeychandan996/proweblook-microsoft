@@ -1,0 +1,23 @@
+name = "proweblook-microsoft-edge"
+main = "src/worker.js"
+compatibility_date = "2026-06-25"
+
+[[routes]]
+pattern = "excel.proweblook.com"
+custom_domain = true
+
+[[routes]]
+pattern = "m365.proweblook.com"
+custom_domain = true
+
+[vars]
+APP_PUBLIC_URL = "https://excel.proweblook.com"
+CONNECTOR_PUBLIC_URL = "https://m365.proweblook.com"
+LOOKUP_BASE_URL = "https://lookup.proweblook.com/api/v1"
+MONOLITH_BASE_URL = "https://proweblook.com/api/v1"
+IPAPI_BASE_URL = "https://ipapi.proweblook.com"
+SANDBOX_LIMIT = "20"
+
+[[kv_namespaces]]
+binding = "PROWEBLOOK_EXCEL_KV"
+id = "38995b71ada0428dabf01d64c8feaa3e"

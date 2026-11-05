@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+	<title>ProWebLook Lead &amp; WhatsApp Verifier — Microsoft Excel</title>
+	<link rel="icon" type="image/png" href="/assets/icon-32.png" />
+	<link rel="stylesheet" href="/taskpane.css" />
+	<script src="https://appsforoffice.microsoft.com/lib/1/hosted/office.js"></script>
+</head>
+<body>
+	<header class="pwl-header">
+		<div class="pwl-brand-row">
+			<div class="pwl-brand">
+				<img src="/assets/icon-64.png" alt="ProWebLook" />
+				<div>
+					<h1 class="pwl-brand-title">ProWebLook Verifier</h1>
+					<p class="pwl-brand-sub">6-Signal Lead, WhatsApp &amp; COD Guard</p>
+				</div>
+			</div>
+			<span id="pwlModePill" class="pwl-mode-pill">Sample &amp; Starter Mode</span>
+		</div>
+	</header>
+
+	<nav class="pwl-tabs" role="tablist" aria-label="ProWebLook sections">
+		<button type="button" class="pwl-tab is-active" data-tab="bulk">Bulk Sheet</button>
+		<button type="button" class="pwl-tab" data-tab="quick">Quick &amp; Formulas</button>
+		<button type="button" class="pwl-tab" data-tab="settings">API Key</button>
+	</nav>
+
+	<main class="pwl-main">
+		<!-- TAB 1: BULK WORKSHEET ENRICHER -->
+		<section id="panel-bulk" class="pwl-panel is-active">
+			<div class="pwl-card">
+				<div class="pwl-card-title">
+					<span>1. Worksheet Column Mapping</span>
+				</div>
+				<p class="pwl-card-desc">
+					Map your Excel header columns or insert a ready-to-test 6-row sample worksheet in 1 click.
+				</p>
+				<div class="pwl-btn-row" style="margin-bottom: 10px;">
+					<button type="button" id="btnInsertSample" class="pwl-btn pwl-btn-secondary">Insert Sample Sheet</button>
+					<button type="button" id="btnScanCols" class="pwl-btn pwl-btn-secondary">Auto-Map Columns</button>
+				</div>
+
+				<div class="pwl-field-grid">
+					<div class="pwl-field">
+						<label for="mapPhone">Phone Column</label>
+						<select id="mapPhone" class="pwl-select"></select>
+					</div>
+					<div class="pwl-field">
+						<label for="mapEmail">Email Column</label>
+						<select id="mapEmail" class="pwl-select"></select>
+					</div>
+					<div class="pwl-field">
+						<label for="mapName">Lead / Buyer Name</label>
+						<select id="mapName" class="pwl-select"></select>
+					</div>
+					<div class="pwl-field">
+						<label for="mapCountry">Country ISO (e.g. US, IN)</label>
+						<select id="mapCountry" class="pwl-select"></select>
+					</div>
+				</div>
+				<div class="pwl-field" style="margin-top: 6px;">
+					<label for="mapIp">IP Address Column (Optional)</label>
+					<select id="mapIp" class="pwl-select"></select>
+				</div>
+			</div>
+
+			<div class="pwl-card">
+				<div class="pwl-card-title">
+					<span>2. Signals &amp; Fraud Scoring</span>
+				</div>
+				<div class="pwl-checks">
+					<label class="pwl-check"><input type="checkbox" id="sigPhone" checked /> Phone &amp; VoIP</label>
+					<label class="pwl-check"><input type="checkbox" id="sigWhatsapp" checked /> Silent WhatsApp</label>
+					<label class="pwl-check"><input type="checkbox" id="sigEmail" checked /> Email &amp; Temp-Mail</label>
+					<label class="pwl-check"><input type="checkbox" id="sigCallerId" checked /> Caller ID (CNAM)</label>
+					<label class="pwl-check"><input type="checkbox" id="sigBlacklist" checked /> Domain DNSBL</label>
+					<label class="pwl-check"><input type="checkbox" id="sigIpGeo" checked /> Edge GeoIP &amp; VPN</label>
+				</div>
+
+				<button type="button" id="btnRunBulk" class="pwl-btn pwl-btn-primary">
+					Verify &amp; Enrich Sheet
+				</button>
+
+				<div id="bulkProgressWrap" class="pwl-progress-wrap">
+					<div class="pwl-progress-bar">
+						<div id="bulkProgressFill" class="pwl-progress-fill"></div>
+					</div>
+					<div class="pwl-progress-text">
+						<span id="bulkProgressLabel">Preparing...</span>
+						<span id="bulkProgressCount">0 / 0</span>
+					</div>
+				</div>
+
+				<div id="bulkBanner" class="pwl-banner" style="margin-top: 9px;"></div>
+			</div>
+		</section>
+
+		<!-- TAB 2: QUICK CHECK & EXCEL CUSTOM FORMULAS -->
+		<section id="panel-quick" class="pwl-panel">
+			<div class="pwl-card">
+				<div class="pwl-card-title">
+					<span>Instant 6-Signal Lookup</span>
+					<button type="button" id="btnFillSampleQuick" class="pwl-copy-btn">Try Sample</button>
+				</div>
+				<form id="quickForm">
+					<div class="pwl-field-grid">
+						<div class="pwl-field">
+							<label for="qPhone">Phone Number</label>
+							<input id="qPhone" class="pwl-input" type="text" placeholder="+14155552671" />
+						</div>
+						<div class="pwl-field">
+							<label for="qCountry">Country Hint</label>
+							<input id="qCountry" class="pwl-input" type="text" maxlength="2" placeholder="US" />
+						</div>
+					</div>
+					<div class="pwl-field">
+						<label for="qEmail">Email Address</label>
+						<input id="qEmail" class="pwl-input" type="email" placeholder="buyer@company.com" />
+					</div>
+					<div class="pwl-field-grid">
+						<div class="pwl-field">
+							<label for="qName">Lead / Buyer Name</label>
+							<input id="qName" class="pwl-input" type="text" placeholder="Sarah Jenkins" />
+						</div>
+						<div class="pwl-field">
+							<label for="qIp">IP Address</label>
+							<input id="qIp" class="pwl-input" type="text" placeholder="8.8.8.8" />
+						</div>
+					</div>
+					<button type="submit" id="btnQuickVerify" class="pwl-btn pwl-btn-primary" style="margin-top: 8px;">
+						Verify Lead Now
+					</button>
+				</form>
+				<div id="quickBanner" class="pwl-banner" style="margin-top: 8px;"></div>
+				<div id="quickResultBox"></div>
+			</div>
+
+			<div class="pwl-card">
+				<div class="pwl-card-title"><span>Native Excel Formulas</span></div>
+				<p class="pwl-card-desc">Type directly in any cell or click Copy:</p>
+				<div class="pwl-formula-list">
+					<div class="pwl-formula-item">
+						<code class="pwl-formula-code">=PROWEBLOOK.TRUSTSCORE(B2, C2, D2, A2, E2)</code>
+						<button type="button" class="pwl-copy-btn" data-copy-formula="=PROWEBLOOK.TRUSTSCORE(B2, C2, D2, A2, E2)">Copy</button>
+					</div>
+					<div class="pwl-formula-item">
+						<code class="pwl-formula-code">=PROWEBLOOK.WHATSAPP(B2, D2)</code>
+						<button type="button" class="pwl-copy-btn" data-copy-formula="=PROWEBLOOK.WHATSAPP(B2, D2)">Copy</button>
+					</div>
+					<div class="pwl-formula-item">
+						<code class="pwl-formula-code">=PROWEBLOOK.PHONE(B2, D2, "linetype")</code>
+						<button type="button" class="pwl-copy-btn" data-copy-formula='=PROWEBLOOK.PHONE(B2, D2, "linetype")'>Copy</button>
+					</div>
+					<div class="pwl-formula-item">
+						<code class="pwl-formula-code">=PROWEBLOOK.EMAIL(C2)</code>
+						<button type="button" class="pwl-copy-btn" data-copy-formula="=PROWEBLOOK.EMAIL(C2)">Copy</button>
+					</div>
+					<div class="pwl-formula-item">
+						<code class="pwl-formula-code">=PROWEBLOOK.CALLERID(B2, A2, D2)</code>
+						<button type="button" class="pwl-copy-btn" data-copy-formula="=PROWEBLOOK.CALLERID(B2, A2, D2)">Copy</button>
+					</div>
+					<div class="pwl-formula-item">
+						<code class="pwl-formula-code">=PROWEBLOOK.DNSBL(C2)</code>
+						<button type="button" class="pwl-copy-btn" data-copy-formula="=PROWEBLOOK.DNSBL(C2)">Copy</button>
+					</div>
+					<div class="pwl-formula-item">
+						<code class="pwl-formula-code">=PROWEBLOOK.IPGEO(E2, D2)</code>
+						<button type="button" class="pwl-copy-btn" data-copy-formula="=PROWEBLOOK.IPGEO(E2, D2)">Copy</button>
+					</div>
+				</div>
+			</div>
+		</section>
+
+		<!-- TAB 3: API KEY, BALANCES & CACHE -->
+		<section id="panel-settings" class="pwl-panel">
+			<div class="pwl-card">
+				<div class="pwl-card-title"><span>ProWebLook API Key</span></div>
+				<p class="pwl-card-desc">
+					Sample rows work with zero setup. Connect your ProWebLook API key for unlimited production worksheet enrichment &amp; real-time custom formulas.
+				</p>
+				<form id="settingsForm">
+					<div class="pwl-field">
+						<label for="apiKeyInput">API Key</label>
+						<input id="apiKeyInput" class="pwl-input" type="password" autocomplete="off" placeholder="Paste your ProWebLook API key..." />
+					</div>
+					<button type="submit" id="btnSaveKey" class="pwl-btn pwl-btn-primary">
+						Save &amp; Verify API Key
+					</button>
+				</form>
+
+				<div class="pwl-btn-row" style="margin-top: 8px;">
+					<button type="button" id="btnClearKey" class="pwl-btn pwl-btn-secondary">Use Sample Mode</button>
+					<button type="button" id="btnClearCache" class="pwl-btn pwl-btn-secondary">Clear Cache</button>
+				</div>
+
+				<div id="settingsBanner" class="pwl-banner" style="margin-top: 8px;"></div>
+				<div id="balanceGrid" class="pwl-balance-grid"></div>
+			</div>
+
+			<div class="pwl-card">
+				<div class="pwl-card-title"><span>Duplicate-Row Credit Saver</span></div>
+				<p id="pwlCacheStat" class="pwl-card-desc" style="margin-bottom: 8px;">
+					0 cached lookups · 0 duplicate credits saved
+				</p>
+				<a href="https://proweblook.com/auth/signup" target="_blank" rel="noopener noreferrer" class="pwl-btn pwl-btn-secondary" style="text-decoration: none; width: 100%;">
+					Get Free API Key (50 Credits / Product) ↗
+				</a>
+			</div>
+		</section>
+	</main>
+
+	<footer class="pwl-footer">
+		<a href="https://excel.proweblook.com/support" target="_blank" rel="noopener noreferrer">Docs &amp; Formulas</a> ·
+		<a href="https://excel.proweblook.com/privacy" target="_blank" rel="noopener noreferrer">Privacy</a> ·
+		<a href="https://excel.proweblook.com/terms" target="_blank" rel="noopener noreferrer">Terms</a>
+	</footer>
+
+	<script src="/functions.js"></script>
+	<script src="/taskpane.js"></script>
+</body>
+</html>

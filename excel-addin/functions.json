@@ -1,0 +1,196 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/office-js/custom-functions.schema.json",
+  "functions": [
+    {
+      "id": "PHONE",
+      "name": "PHONE",
+      "description": "Validates a phone number and returns carrier, line type (Mobile/VoIP/Landline), or formatted E.164.",
+      "helpUrl": "https://excel.proweblook.com/support",
+      "parameters": [
+        {
+          "name": "phone",
+          "description": "Phone number in E.164 (+14155552671) or national format.",
+          "type": "string"
+        },
+        {
+          "name": "country",
+          "description": "Optional 2-letter ISO country code hint (e.g. US, IN, GB).",
+          "type": "string",
+          "optional": true
+        },
+        {
+          "name": "field",
+          "description": "Optional field: summary (default), status, linetype, carrier, formatted, voip, country.",
+          "type": "string",
+          "optional": true
+        }
+      ],
+      "result": {
+        "type": "any"
+      }
+    },
+    {
+      "id": "WHATSAPP",
+      "name": "WHATSAPP",
+      "description": "Silently checks whether a phone number is registered on WhatsApp (Personal or Business).",
+      "helpUrl": "https://excel.proweblook.com/support",
+      "parameters": [
+        {
+          "name": "phone",
+          "description": "Phone number in E.164 (+919876543210) or national format.",
+          "type": "string"
+        },
+        {
+          "name": "country",
+          "description": "Optional 2-letter ISO country code hint (e.g. IN, BR, AE).",
+          "type": "string",
+          "optional": true
+        },
+        {
+          "name": "field",
+          "description": "Optional field: summary (default), registered, business, type.",
+          "type": "string",
+          "optional": true
+        }
+      ],
+      "result": {
+        "type": "any"
+      }
+    },
+    {
+      "id": "EMAIL",
+      "name": "EMAIL",
+      "description": "Verifies email MX/mailbox deliverability and detects disposable 10-minute temp-mail domains.",
+      "helpUrl": "https://excel.proweblook.com/support",
+      "parameters": [
+        {
+          "name": "email",
+          "description": "Email address to verify (e.g. buyer@company.com).",
+          "type": "string"
+        },
+        {
+          "name": "field",
+          "description": "Optional field: verdict (default), deliverable, disposable, type, domain, reason.",
+          "type": "string",
+          "optional": true
+        }
+      ],
+      "result": {
+        "type": "any"
+      }
+    },
+    {
+      "id": "CALLERID",
+      "name": "CALLERID",
+      "description": "Looks up registered Caller ID (CNAM) subscriber name and optionally matches against lead name.",
+      "helpUrl": "https://excel.proweblook.com/support",
+      "parameters": [
+        {
+          "name": "phone",
+          "description": "Phone number in E.164 or national format.",
+          "type": "string"
+        },
+        {
+          "name": "lead_name",
+          "description": "Optional customer or company name to compare (returns MATCH / PARTIAL / MISMATCH).",
+          "type": "string",
+          "optional": true
+        },
+        {
+          "name": "country",
+          "description": "Optional 2-letter ISO country code hint (e.g. US, IN).",
+          "type": "string",
+          "optional": true
+        }
+      ],
+      "result": {
+        "type": "string"
+      }
+    },
+    {
+      "id": "DNSBL",
+      "name": "DNSBL",
+      "description": "Screens a corporate domain or IP against 50+ DNSBL spam & malware blocklists.",
+      "helpUrl": "https://excel.proweblook.com/support",
+      "parameters": [
+        {
+          "name": "domain_or_ip",
+          "description": "Corporate domain, email address, or IPv4/IPv6 address.",
+          "type": "string"
+        },
+        {
+          "name": "field",
+          "description": "Optional field: summary (default), listed, count.",
+          "type": "string",
+          "optional": true
+        }
+      ],
+      "result": {
+        "type": "any"
+      }
+    },
+    {
+      "id": "IPGEO",
+      "name": "IPGEO",
+      "description": "Resolves IP geolocation, ISP/ASN, VPN/hosting detection, and billing country mismatch.",
+      "helpUrl": "https://excel.proweblook.com/support",
+      "parameters": [
+        {
+          "name": "ip",
+          "description": "Public IPv4 or IPv6 address (e.g. 8.8.8.8).",
+          "type": "string"
+        },
+        {
+          "name": "country_hint",
+          "description": "Optional expected 2-letter billing country code to flag mismatches.",
+          "type": "string",
+          "optional": true
+        }
+      ],
+      "result": {
+        "type": "string"
+      }
+    },
+    {
+      "id": "TRUSTSCORE",
+      "name": "TRUSTSCORE",
+      "description": "Calculates a composite 0-100 Lead & COD Fraud Trust Score across Phone, WhatsApp, Email, CNAM & IP.",
+      "helpUrl": "https://excel.proweblook.com/support",
+      "parameters": [
+        {
+          "name": "phone",
+          "description": "Phone number (optional if email provided).",
+          "type": "string",
+          "optional": true
+        },
+        {
+          "name": "email",
+          "description": "Email address (optional if phone provided).",
+          "type": "string",
+          "optional": true
+        },
+        {
+          "name": "country",
+          "description": "Optional 2-letter ISO country code (e.g. US, IN).",
+          "type": "string",
+          "optional": true
+        },
+        {
+          "name": "lead_name",
+          "description": "Optional customer/lead full name for Caller ID matching.",
+          "type": "string",
+          "optional": true
+        },
+        {
+          "name": "ip",
+          "description": "Optional customer IP address for GeoIP & VPN screening.",
+          "type": "string",
+          "optional": true
+        }
+      ],
+      "result": {
+        "type": "any"
+      }
+    }
+  ]
+}

@@ -1,0 +1,133 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<OfficeApp xmlns="http://schemas.microsoft.com/office/appforoffice/1.1"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xmlns:bt="http://schemas.microsoft.com/office/officeappbasictypes/1.0"
+  xmlns:ov="http://schemas.microsoft.com/office/taskpaneappversionoverrides"
+  xsi:type="TaskPaneApp">
+  <Id>8f4a6b92-3c1e-4d8a-9b52-7e20c419f6d3</Id>
+  <Version>1.0.0.0</Version>
+  <ProviderName>ProWebLook</ProviderName>
+  <DefaultLocale>en-US</DefaultLocale>
+  <DisplayName DefaultValue="ProWebLook Lead &amp; WhatsApp Verifier"/>
+  <Description DefaultValue="Bulk verify Phone Carrier, Silent WhatsApp, Caller ID (CNAM), Email Deliverability, Corporate DNSBL &amp; Edge GeoIP directly in Microsoft Excel."/>
+  <IconUrl DefaultValue="https://excel.proweblook.com/assets/icon-32.png"/>
+  <HighResolutionIconUrl DefaultValue="https://excel.proweblook.com/assets/icon-64.png"/>
+  <SupportUrl DefaultValue="https://excel.proweblook.com/support"/>
+  <AppDomains>
+    <AppDomain>https://excel.proweblook.com</AppDomain>
+    <AppDomain>https://m365.proweblook.com</AppDomain>
+    <AppDomain>https://proweblook.com</AppDomain>
+  </AppDomains>
+  <Hosts>
+    <Host Name="Workbook"/>
+  </Hosts>
+  <Requirements>
+    <Sets DefaultMinVersion="1.1">
+      <Set Name="SharedRuntime" MinVersion="1.1"/>
+      <Set Name="CustomFunctionsRuntime" MinVersion="1.1"/>
+    </Sets>
+  </Requirements>
+  <DefaultSettings>
+    <SourceLocation DefaultValue="https://excel.proweblook.com/taskpane.html"/>
+  </DefaultSettings>
+  <Permissions>ReadWriteDocument</Permissions>
+  <VersionOverrides xmlns="http://schemas.microsoft.com/office/taskpaneappversionoverrides" xsi:type="VersionOverridesV1_0">
+    <Hosts>
+      <Host xsi:type="Workbook">
+        <Runtimes>
+          <Runtime resid="PWL.Shared.Url" lifetime="long"/>
+        </Runtimes>
+        <AllFormFactors>
+          <ExtensionPoint xsi:type="CustomFunctions">
+            <Script>
+              <SourceLocation resid="PWL.Fn.Script"/>
+            </Script>
+            <Page>
+              <SourceLocation resid="PWL.Shared.Url"/>
+            </Page>
+            <Metadata>
+              <SourceLocation resid="PWL.Fn.Meta"/>
+            </Metadata>
+            <Namespace resid="PWL.Fn.Ns"/>
+          </ExtensionPoint>
+        </AllFormFactors>
+        <DesktopFormFactor>
+          <GetStarted>
+            <Title resid="PWL.GetStarted.Title"/>
+            <Description resid="PWL.GetStarted.Desc"/>
+            <LearnMoreUrl resid="PWL.Support.Url"/>
+          </GetStarted>
+          <FunctionFile resid="PWL.Shared.Url"/>
+          <ExtensionPoint xsi:type="PrimaryCommandSurface">
+            <OfficeTab id="TabHome">
+              <Group id="PWL.RibbonGroup">
+                <Label resid="PWL.Group.Label"/>
+                <Icon>
+                  <bt:Image size="16" resid="PWL.Icon.16"/>
+                  <bt:Image size="32" resid="PWL.Icon.32"/>
+                  <bt:Image size="80" resid="PWL.Icon.80"/>
+                </Icon>
+                <Control xsi:type="Button" id="PWL.OpenTaskpaneBtn">
+                  <Label resid="PWL.TaskpaneBtn.Label"/>
+                  <Supertip>
+                    <Title resid="PWL.TaskpaneBtn.Label"/>
+                    <Description resid="PWL.TaskpaneBtn.Tip"/>
+                  </Supertip>
+                  <Icon>
+                    <bt:Image size="16" resid="PWL.Icon.16"/>
+                    <bt:Image size="32" resid="PWL.Icon.32"/>
+                    <bt:Image size="80" resid="PWL.Icon.80"/>
+                  </Icon>
+                  <Action xsi:type="ShowTaskpane">
+                    <TaskpaneId>ButtonId1</TaskpaneId>
+                    <SourceLocation resid="PWL.Shared.Url"/>
+                  </Action>
+                </Control>
+                <Control xsi:type="Button" id="PWL.SampleSheetBtn">
+                  <Label resid="PWL.SampleBtn.Label"/>
+                  <Supertip>
+                    <Title resid="PWL.SampleBtn.Label"/>
+                    <Description resid="PWL.SampleBtn.Tip"/>
+                  </Supertip>
+                  <Icon>
+                    <bt:Image size="16" resid="PWL.Icon.16"/>
+                    <bt:Image size="32" resid="PWL.Icon.32"/>
+                    <bt:Image size="80" resid="PWL.Icon.80"/>
+                  </Icon>
+                  <Action xsi:type="ExecuteFunction">
+                    <FunctionName>insertSampleLeadsCommand</FunctionName>
+                  </Action>
+                </Control>
+              </Group>
+            </OfficeTab>
+          </ExtensionPoint>
+        </DesktopFormFactor>
+      </Host>
+    </Hosts>
+    <Resources>
+      <bt:Images>
+        <bt:Image id="PWL.Icon.16" DefaultValue="https://excel.proweblook.com/assets/icon-16.png"/>
+        <bt:Image id="PWL.Icon.32" DefaultValue="https://excel.proweblook.com/assets/icon-32.png"/>
+        <bt:Image id="PWL.Icon.80" DefaultValue="https://excel.proweblook.com/assets/icon-80.png"/>
+      </bt:Images>
+      <bt:Urls>
+        <bt:Url id="PWL.Shared.Url" DefaultValue="https://excel.proweblook.com/taskpane.html"/>
+        <bt:Url id="PWL.Fn.Script" DefaultValue="https://excel.proweblook.com/functions.js"/>
+        <bt:Url id="PWL.Fn.Meta" DefaultValue="https://excel.proweblook.com/functions.json"/>
+        <bt:Url id="PWL.Support.Url" DefaultValue="https://excel.proweblook.com/support"/>
+      </bt:Urls>
+      <bt:ShortStrings>
+        <bt:String id="PWL.Fn.Ns" DefaultValue="PROWEBLOOK"/>
+        <bt:String id="PWL.GetStarted.Title" DefaultValue="Verify Leads, WhatsApp &amp; Emails in Excel"/>
+        <bt:String id="PWL.Group.Label" DefaultValue="ProWebLook"/>
+        <bt:String id="PWL.TaskpaneBtn.Label" DefaultValue="Verify Leads"/>
+        <bt:String id="PWL.SampleBtn.Label" DefaultValue="Sample Sheet"/>
+      </bt:ShortStrings>
+      <bt:LongStrings>
+        <bt:String id="PWL.GetStarted.Desc" DefaultValue="ProWebLook is ready! Click Verify Leads on the Home tab or use =PROWEBLOOK.WHATSAPP(), =PROWEBLOOK.EMAIL(), and =PROWEBLOOK.PHONE()."/>
+        <bt:String id="PWL.TaskpaneBtn.Tip" DefaultValue="Open the ProWebLook Bulk Lead &amp; COD Fraud Verifier taskpane to enrich columns or run single lookups."/>
+        <bt:String id="PWL.SampleBtn.Tip" DefaultValue="Insert a sample 6-row lead verification worksheet to test ProWebLook formulas and bulk enrichment."/>
+      </bt:LongStrings>
+    </Resources>
+  </VersionOverrides>
+</OfficeApp>

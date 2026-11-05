@@ -1,0 +1,15 @@
+{
+  "name": "proweblook-microsoft",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "description": "ProWebLook Microsoft AppSource Dual Blitz: Excel Office.js Add-in (Taskpane + Custom Functions) & Microsoft Power Automate / Copilot Studio Custom Connector",
+  "scripts": {
+    "build:assets": "node scripts/generate-assets.mjs && node scripts/bundle-static.mjs && node scripts/build-connector-swagger.mjs",
+    "validate:excel": "npx --yes office-addin-manifest validate excel-addin/manifest.xml",
+    "validate:excel:prod": "npx --yes office-addin-manifest validate -p excel-addin/manifest.xml",
+    "validate:connector": "node scripts/validate-connector.mjs",
+    "test": "node --test test/microsoft-suite.test.mjs",
+    "deploy:edge": "npx wrangler deploy"
+  }
+}

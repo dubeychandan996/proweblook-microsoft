@@ -1,0 +1,23 @@
+{
+    "properties": {
+        "connectionParameters": {
+            "api_key": {
+                "type": "securestring",
+                "uiDefinition": {
+                    "displayName": "API Key",
+                    "description": "Enter your ProWebLook API key from https://proweblook.com/user/api_key.",
+                    "tooltip": "Provide your ProWebLook API key",
+                    "constraints": {
+                        "tabIndex": 2,
+                        "clearText": false,
+                        "required": "true"
+                    }
+                }
+            }
+        },
+        "iconBrandColor": "#0F172A",
+        "capabilities": [],
+        "publisher": "ProWebLook",
+        "stackOwner": "ProWebLook"
+    }
+}
